@@ -3,6 +3,7 @@ package it.unisalento.smartcitywastemanagement.alarmsms.dto;
 import it.unisalento.smartcitywastemanagement.alarmsms.domain.AlarmHistory;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class AlarmHistoryDTO {
 
@@ -12,7 +13,7 @@ public class AlarmHistoryDTO {
 
     private String description;
 
-    private LocalDate timestamp;
+    private LocalDateTime timestamp;
 
     private AlarmHistory.Severity severity;
 
@@ -40,11 +41,11 @@ public class AlarmHistoryDTO {
         this.description = description;
     }
 
-    public LocalDate getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDate timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
