@@ -4,6 +4,7 @@ package it.unisalento.smartcitywastemanagement.alarmsms.configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
@@ -44,7 +45,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
     public void registerStompEndpoints(StompEndpointRegistry registry) {
 
         // Configuro l'endpoint websocket al quale i client possono connettersi (SockJS serve come metodo di fallback)
-        registry.addEndpoint("/ws-endpoint").withSockJS();
+        registry.addEndpoint("/ws-endpoint").setAllowedOrigins("*").withSockJS();
     }
 }
 

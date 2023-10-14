@@ -26,6 +26,9 @@ services:
       - "15672:15672"  # Porta per l'interfaccia di gestione web
       - "1883:1883"   # Porta per MQTT
       - "61613:61613" # Porta per STOMP
+      - "15674:15674"
+    expose:
+      - "15674"
     #command: rabbitmq-plugins enable rabbitmq_stomp rabbitmq_mqtt --online # Abilito i protocolli aggiuntivi che userò
     networks:
       - my-network
