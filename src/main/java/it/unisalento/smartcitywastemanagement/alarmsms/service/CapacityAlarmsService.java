@@ -8,5 +8,4 @@ public interface CapacityAlarmsService {
 
     void manageCapacityAlarms(AlarmMessage message);
 
-    AlarmNotificationMessage createCapacityNotification(int smartBinsToClean);
 }

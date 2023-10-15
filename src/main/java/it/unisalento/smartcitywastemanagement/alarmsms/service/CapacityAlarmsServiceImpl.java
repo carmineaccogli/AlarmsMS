@@ -70,13 +70,20 @@ public class CapacityAlarmsServiceImpl implements CapacityAlarmsService {
 
 
 
-    public AlarmNotificationMessage createCapacityNotification(int smartBinsToClean) {
+    private AlarmNotificationMessage createCapacityNotification(int smartBinsToClean) {
         AlarmNotificationMessage capacityNotification = new AlarmNotificationMessage();
 
-        capacityNotification.setTitle("Avviso saturazione capienza SmartBin");
+        capacityNotification.setTitle("Avviso saturazione capienza SmartBins");
         capacityNotification.setTimestamp(LocalDateTime.now());
         capacityNotification.setMessageType(AlarmHistory.Severity.DANGER.toString());
-        capacityNotification.setDescription(smartBinsToClean + " smartBins eccedono il limite di capienza. Si consiglia di istanziare un percorso di pulizia.");
+
+        String infoPart;
+        if(smartBinsToClean > 1)
+            infoPart = " SmartBins eccedono il limite di capienza.";
+        else
+            infoPart = " SmartBin eccede il limite di capienza.";
+
+        capacityNotification.setDescription(smartBinsToClean + infoPart + " Si consiglia di istanziare un percorso di pulizia.");
 
         return capacityNotification;
     }

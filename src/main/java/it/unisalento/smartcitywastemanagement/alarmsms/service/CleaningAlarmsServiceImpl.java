@@ -7,6 +7,7 @@ import it.unisalento.smartcitywastemanagement.alarmsms.repositories.AlarmHistory
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
 
@@ -21,8 +22,6 @@ public class CleaningAlarmsServiceImpl implements CleaningAlarmsService{
     @Autowired
     private WSRabbit_NotificationSender notificationSender;
 
-    @Autowired
-    CapacityAlarmsService capacityAlarmsService;
 
 
 
@@ -69,19 +68,37 @@ public class CleaningAlarmsServiceImpl implements CleaningAlarmsService{
         // 5
         int smartBinsToClean = alarmHistoryRepository.findByHandledAndType(false,"Capacity").size();
 
-        // 6
-        if(smartBinsToClean > 0) {
-            // 6.1
-            AlarmNotificationMessage remainingSmartBinsToCleanMessage = capacityAlarmsService.createCapacityNotification(smartBinsToClean);
 
-            System.out.println(remainingSmartBinsToCleanMessage.getTitle());
-            System.out.println(remainingSmartBinsToCleanMessage.getMessageType());
-            System.out.println(remainingSmartBinsToCleanMessage.getDescription());
+        // 6.1
+        AlarmNotificationMessage remainingSmartBinsToCleanMessage = createCleaningNotification(smartBinsToClean);
 
-            // 6.2
-            notificationSender.sendCapacityNotification(remainingSmartBinsToCleanMessage);
-        }
+        System.out.println(remainingSmartBinsToCleanMessage.getTitle());
+        System.out.println(remainingSmartBinsToCleanMessage.getMessageType());
+        System.out.println(remainingSmartBinsToCleanMessage.getDescription());
 
+        // 6.2
+        notificationSender.sendCapacityNotification(remainingSmartBinsToCleanMessage);
+
+    }
+
+    private AlarmNotificationMessage createCleaningNotification(int smartBinsToClean) {
+        AlarmNotificationMessage cleaningNotification = new AlarmNotificationMessage();
+
+        cleaningNotification.setTitle("Avviso pulizia SmartBin");
+        cleaningNotification.setTimestamp(LocalDateTime.now());
+        cleaningNotification.setMessageType(AlarmHistory.Severity.SUCCESS.toString());
+
+        String description = null;
+        if(smartBinsToClean > 1)
+            description = "Pulizia in corso. Rimangono "+smartBinsToClean+" SmartBins da svuotare";
+        else if(smartBinsToClean == 1)
+            description = "Pulizia in corso. Rimane "+smartBinsToClean+ " SmartBin da svuotare";
+        else if(smartBinsToClean == 0)
+            description = "Pulizia terminata. Tutti gli SmartBins notificati sono stati svuotati";
+
+        cleaningNotification.setDescription(description);
+
+        return cleaningNotification;
     }
 
 
