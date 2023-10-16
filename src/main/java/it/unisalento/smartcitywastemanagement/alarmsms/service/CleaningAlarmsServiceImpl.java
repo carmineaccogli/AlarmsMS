@@ -94,7 +94,7 @@ public class CleaningAlarmsServiceImpl implements CleaningAlarmsService{
         else if(smartBinsToClean == 1)
             description = "Pulizia in corso. Rimane "+smartBinsToClean+ " SmartBin da svuotare";
         else if(smartBinsToClean == 0)
-            description = "Pulizia terminata. Tutti gli SmartBins notificati sono stati svuotati";
+            description = "Tutti gli SmartBins notificati sono stati svuotati";
 
         cleaningNotification.setDescription(description);
 
