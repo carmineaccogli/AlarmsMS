@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 /**
  *  Quando una eccezione viene sollevata, questa classe si occupa di restituire nel body
@@ -29,6 +30,13 @@ public class CustomExceptionHandler {
                         "Citizen not found"
                 ));
     }*/
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<Object> noHandlerFoundHandler(NoHandlerFoundException ex) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ex.getBody());
+    }
+
 
 
 
