@@ -84,17 +84,17 @@ public class CleaningAlarmsServiceImpl implements CleaningAlarmsService{
     private AlarmNotificationMessage createCleaningNotification(int smartBinsToClean) {
         AlarmNotificationMessage cleaningNotification = new AlarmNotificationMessage();
 
-        cleaningNotification.setTitle("Avviso pulizia SmartBin");
+        cleaningNotification.setTitle("SmartBin Cleanup Alert");
         cleaningNotification.setTimestamp(LocalDateTime.now());
         cleaningNotification.setMessageType(AlarmHistory.Severity.SUCCESS.toString());
 
         String description = null;
         if(smartBinsToClean > 1)
-            description = "Pulizia in corso. Rimangono "+smartBinsToClean+" SmartBins da svuotare";
+            description = "Cleaning in progress. "+smartBinsToClean+" SmartBins remaining to empty";
         else if(smartBinsToClean == 1)
-            description = "Pulizia in corso. Rimane "+smartBinsToClean+ " SmartBin da svuotare";
+            description = "Cleaning in progress. "+smartBinsToClean+ " SmartBin left to empty";
         else if(smartBinsToClean == 0)
-            description = "Tutti gli SmartBins notificati sono stati svuotati";
+            description = "All notified SmartBins have been emptied";
 
         cleaningNotification.setDescription(description);
 
